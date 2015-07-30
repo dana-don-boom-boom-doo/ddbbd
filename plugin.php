@@ -26,16 +26,20 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+define( 'DDBBD_FILE', __FILE__ );
+define( 'DDBBD_DIR', dirname( DDBBD_FILE ) );
+define( 'DDBBD_INC', DDBBD_DIR . '/inc' );
+
 if ( ! defined( 'DDBBD_FUNCTIONS_INCLUDED' ) )
 	require_once 'inc/functions.php';
 
 if ( ! _ddbbd_plugin_requirements( __FILE__ ) )
 	return;
 
-if ( ! class_exists( 'DDBBD\\ClassLoader' ) ) {
+if ( ! class_exists( 'DDBBD\\ClassLoader' ) )
 	require_once 'lib/classloader.php';
-	_ddbbd_register_classloader( 'DDBBD', dirname( __FILE__ ) . '/lib' );
-}
 
-if ( file_exists( dirname( __FILE__ ) . '/bootstrap.php' ) )
-	require_once 'bootstrap.php';
+_ddbbd_register_classloader( 'DDBBD', DDBBD_DIR . '/lib' );
+_ddbbd_register_classloader( 'DanaDonBoomBoomDoo', DDBBD_INC, [ 'file_prefix' => 'class-' ] );
+
+require_once DDBBD_INC . '/bootstrap.php';
